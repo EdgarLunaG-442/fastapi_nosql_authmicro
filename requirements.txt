@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+requests
+cors
+uuid
+pymongo
+pydantic
+pydantic[email]
+motor
+bcrypt
+pyjwt
