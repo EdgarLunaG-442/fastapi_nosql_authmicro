@@ -1,1 +1,1 @@
-from .models import AuthUserModel
+from .models import AuthUserModel, ContactUserModel

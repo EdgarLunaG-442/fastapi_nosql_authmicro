@@ -1,1 +1,1 @@
-from .schemas import SignInUserSchema
+from .schemas import SignInUserSchema, LogInUserSchema

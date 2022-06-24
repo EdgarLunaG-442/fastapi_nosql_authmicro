@@ -9,3 +9,5 @@ pydantic[email]
 motor
 bcrypt
 pyjwt
+python-multipart
+pika

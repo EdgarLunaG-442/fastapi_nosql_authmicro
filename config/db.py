@@ -5,6 +5,7 @@ from pymongo.database import Database
 from .default import DEFAULT_SETTINGS
 
 MONGODB_URL = os.environ.get("MONGODB_URL", DEFAULT_SETTINGS["MONGODB_URL"])
+DATABASE_NAME = os.environ.get("DATABASE_NAME", DEFAULT_SETTINGS["DATABASE_NAME"])
 client: MongoClient = MongoClient(MONGODB_URL)
 
 
@@ -25,5 +26,5 @@ class PyObjectId(ObjectId):
 
 
 def get_db():
-    db: Database = client.get_database('auth')
+    db: Database = client.get_database(DATABASE_NAME)
     yield db
