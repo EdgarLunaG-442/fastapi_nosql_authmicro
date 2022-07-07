@@ -9,7 +9,7 @@ from config import get_db
 from models import AuthUserModel
 from schemas import LogInUserSchema
 
-login_router = APIRouter(prefix="/auth/login", tags=["Log In"])
+login_router = APIRouter(prefix="/login", tags=["Log In"])
 logger = initiate_logger("log_in")
 
 

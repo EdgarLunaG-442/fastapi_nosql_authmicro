@@ -4,7 +4,7 @@ from common import add_custom_errors, handle_cors
 
 
 def create_app():
-    app = FastAPI(openapi_url="/auth/openapi.json", docs_url="/auth/documentation")
+    app = FastAPI(docs_url="/documentation")
     handle_cors(app)
     app.include_router(signin_router)
     app.include_router(login_router)

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 
-health_router = APIRouter(prefix="/auth/health", tags=["Health Check"])
+health_router = APIRouter(prefix="/health", tags=["Health Check"])
 
 
 @health_router.get("/")

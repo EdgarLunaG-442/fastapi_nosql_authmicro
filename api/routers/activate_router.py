@@ -13,7 +13,7 @@ from schemas import LogInUserSchema
 PUBLISH_QUEUE = os.getenv('PUBLISH_QUEUE')
 PUBLISH_EXCHANGE = os.getenv('PUBLISH_EXCHANGE')
 
-activate_router = APIRouter(prefix="/auth/activate", tags=["Activate Account"])
+activate_router = APIRouter(prefix="/activate", tags=["Activate Account"])
 logger = initiate_logger("activate")
 
 

@@ -6,7 +6,7 @@ from config import get_db
 from models import AuthUserModel, ContactUserModel
 from schemas import SignInUserSchema, LogInUserSchema
 
-signin_router = APIRouter(prefix="/auth/signin", tags=["Sign In"])
+signin_router = APIRouter(prefix="/signin", tags=["Sign In"])
 logger = initiate_logger("sign_in")
 
 

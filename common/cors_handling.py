@@ -11,6 +11,7 @@ def handle_cors(app: FastAPI):
         "http://0.0.0.0:8080",
         "http://0.0.0.0:8000",
         "http://0.0.0.0:80"
+        "http://adael-project.info"
     ]
 
     app.add_middleware(

@@ -7,7 +7,7 @@ from config import get_db
 from models import AuthUserModel
 from common import oauth2_scheme, TokenEnum
 
-sesion_router = APIRouter(prefix="/auth/sesion", tags=["Sesion"])
+sesion_router = APIRouter(prefix="/sesion", tags=["Sesion"])
 logger = initiate_logger("sesion")
 
 
