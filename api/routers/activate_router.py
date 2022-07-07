@@ -6,14 +6,14 @@ from pymongo.database import Database
 from pymongo.collection import Collection
 from helpers import initiate_logger, verify_if_user_exists, decode_token, verify_token_payload, enviar_activacion
 from common import TokenEnum, token_schema, AnyCode
-from config import get_db, DEFAULT_SETTINGS
+from config import get_db
 from models import AuthUserModel
 from schemas import LogInUserSchema
 
-PUBLISH_QUEUE = os.getenv('PUBLISH_QUEUE', DEFAULT_SETTINGS.get('PUBLISH_QUEUE'))
-PUBLISH_EXCHANGE = os.getenv('PUBLISH_EXCHANGE', DEFAULT_SETTINGS.get('PUBLISH_EXCHANGE'))
+PUBLISH_QUEUE = os.getenv('PUBLISH_QUEUE')
+PUBLISH_EXCHANGE = os.getenv('PUBLISH_EXCHANGE')
 
-activate_router = APIRouter(prefix="/activate", tags=["Activate Account"])
+activate_router = APIRouter(prefix="/auth/activate", tags=["Activate Account"])
 logger = initiate_logger("activate")
 
 

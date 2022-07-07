@@ -2,10 +2,13 @@ import os
 from bson import ObjectId
 from pymongo import MongoClient
 from pymongo.database import Database
-from .default import DEFAULT_SETTINGS
 
-MONGODB_URL = os.environ.get("MONGODB_URL", DEFAULT_SETTINGS["MONGODB_URL"])
-DATABASE_NAME = os.environ.get("DATABASE_NAME", DEFAULT_SETTINGS["DATABASE_NAME"])
+MONGODB_USERNAME = os.environ.get("MONGODB_USERNAME")
+MONGODB_PASSWORD = os.environ.get("MONGODB_PASSWORD")
+MONGODB_HOST = os.environ.get("MONGODB_HOST")
+MONGODB_PORT = os.environ.get("MONGODB_PORT")
+MONGODB_URL = f"mongodb://{MONGODB_USERNAME}:{MONGODB_PASSWORD}@{MONGODB_HOST}:{MONGODB_PORT}/?authMechanism=DEFAULT&authSource=admin"
+DATABASE_NAME = os.environ.get("DATABASE_NAME")
 client: MongoClient = MongoClient(MONGODB_URL)
 
 

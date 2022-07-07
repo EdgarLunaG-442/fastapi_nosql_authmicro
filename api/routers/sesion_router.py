@@ -3,12 +3,11 @@ from fastapi import APIRouter, Depends
 from pymongo.database import Database
 from pymongo.collection import Collection
 from helpers import initiate_logger, decode_token, verify_token_payload, verify_if_user_exists, delete_from_dict
-from common import NotAllowed
 from config import get_db
 from models import AuthUserModel
 from common import oauth2_scheme, TokenEnum
 
-sesion_router = APIRouter(prefix="/sesion", tags=["Sesion"])
+sesion_router = APIRouter(prefix="/auth/sesion", tags=["Sesion"])
 logger = initiate_logger("sesion")
 
 

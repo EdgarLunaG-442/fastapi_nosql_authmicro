@@ -1,14 +1,12 @@
-from fastapi.encoders import jsonable_encoder
-from fastapi import APIRouter, Depends, Body, Request
+from fastapi import APIRouter, Depends
 from pymongo.database import Database
 from pymongo.collection import Collection
-from helpers import initiate_logger, verify_if_user_exists, delete_from_dict, enviar_activacion
+from helpers import initiate_logger, verify_if_user_exists, enviar_activacion
 from config import get_db
 from models import AuthUserModel, ContactUserModel
 from schemas import SignInUserSchema, LogInUserSchema
-from datetime import datetime
 
-signin_router = APIRouter(prefix="/signin", tags=["Sign In"])
+signin_router = APIRouter(prefix="/auth/signin", tags=["Sign In"])
 logger = initiate_logger("sign_in")
 
 

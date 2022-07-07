@@ -6,7 +6,6 @@ from common import ObjectAlreadyExists, ObjectNotFound, NotAllowed, TokenEnum, A
 from fastapi import Depends
 from fastapi.encoders import jsonable_encoder
 from pymongo.database import Database
-from config import get_db, DEFAULT_SETTINGS
 from pymongo.collection import Collection
 from models import AuthUserModel
 from typing import List
@@ -14,8 +13,8 @@ from config import pika_client
 from pika.exceptions import AMQPError
 from .logger import print_exception
 
-PUBLISH_QUEUE = os.getenv('PUBLISH_QUEUE', DEFAULT_SETTINGS.get('PUBLISH_QUEUE'))
-PUBLISH_EXCHANGE = os.getenv('PUBLISH_EXCHANGE', DEFAULT_SETTINGS.get('PUBLISH_EXCHANGE'))
+PUBLISH_QUEUE = os.getenv('PUBLISH_QUEUE')
+PUBLISH_EXCHANGE = os.getenv('PUBLISH_EXCHANGE')
 
 
 def delete_from_dict(payload: dict, unwanted_keys: List[str]):

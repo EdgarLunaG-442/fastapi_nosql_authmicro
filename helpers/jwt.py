@@ -1,11 +1,10 @@
 import os
 import datetime
 import jwt
-from config import DEFAULT_SETTINGS
 from common import TokenEnum
 from common.error_handling import NotAllowed
 
-JWT_SECRET = os.getenv('JWT_SECRET', DEFAULT_SETTINGS.get("JWT_SECRET"))
+JWT_SECRET = os.getenv('JWT_SECRET')
 
 
 def generate_token(payload: dict, activation_token: bool = False):
