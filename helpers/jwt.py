@@ -24,3 +24,5 @@ def decode_token(token: str):
         return payload
     except jwt.ExpiredSignatureError:
         raise NotAllowed("La sesion ha expirado, porfavor refresque el token")
+    except jwt.InvalidSignatureError:
+        raise NotAllowed("El token no es valido. Porfavor ingrese uno nuevo.")

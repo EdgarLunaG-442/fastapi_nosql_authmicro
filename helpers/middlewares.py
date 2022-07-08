@@ -46,13 +46,13 @@ def verify_token_payload(token_payload: dict, token_type: TokenEnum, db_payload:
     if token_payload.get('token_type', '') != token_type.value:
         raise NotAllowed('El Token no es valido. Porfavor ingrese un nuevo token')
 
-    filtered_payload = delete_from_dict(token_payload, ['token_type'])
-    filtered_db_payload = delete_from_dict(db_payload, ['password'])
+    filtered_payload = delete_from_dict(token_payload, ['token_type', 'name', 'modified_at'])
+    filtered_db_payload = delete_from_dict(db_payload, ['password', 'name', 'modified_at'])
     if db_payload and filtered_payload != filtered_db_payload:
         raise NotAllowed('El Token no es valido. Porfavor ingrese un nuevo token')
 
 
-def enviar_activacion(user: LogInUserSchema, db: Database, logger, sign_in_step:bool = False):
+def enviar_activacion(user: LogInUserSchema, db: Database, logger, sign_in_step: bool = False):
     '''reenvia el correo de activacion'''
     collection: Collection = db.get_collection('AccesoUsuario')
     user_dict = verify_if_user_exists(collection, user.email, 'log_in')

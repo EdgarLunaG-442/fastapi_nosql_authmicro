@@ -23,5 +23,5 @@ async def log_in(user: OAuth2PasswordRequestForm = Depends(), db: Database = Dep
     verify_password(auth_user_model, user.password)
     verify_if_user_verified(auth_user_model)
     out_user_model = jsonable_encoder(auth_user_model)
-    token = generate_token(jsonable_encoder(delete_from_dict(out_user_model, ['password'])))
+    token = generate_token(delete_from_dict(out_user_model, ['password']))
     return {"access_token": token, "token_type": "bearer"}

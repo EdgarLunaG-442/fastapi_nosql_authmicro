@@ -5,6 +5,7 @@ from pymongo.collection import Collection
 from helpers import initiate_logger, decode_token, verify_token_payload, verify_if_user_exists, delete_from_dict
 from config import get_db
 from models import AuthUserModel
+from helpers import generate_token
 from common import oauth2_scheme, TokenEnum
 
 sesion_router = APIRouter(prefix="/sesion", tags=["Sesion"])
@@ -21,4 +22,5 @@ async def sesion(token: str = Depends(oauth2_scheme), db: Database = Depends(get
     auth_user_model = AuthUserModel(**user_dict_raw)
     auth_user_dict_after_model = jsonable_encoder(auth_user_model)
     verify_token_payload(token_payload, TokenEnum.LOGIN, auth_user_dict_after_model)
+    token = generate_token(delete_from_dict(auth_user_dict_after_model, ['password']))
     return {"access_token": token, "token_type": "bearer"}
