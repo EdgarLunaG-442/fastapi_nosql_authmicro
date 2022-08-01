@@ -4,14 +4,11 @@ from fastapi.security import HTTPAuthorizationCredentials
 from fastapi import APIRouter, Depends
 from pymongo.database import Database
 from pymongo.collection import Collection
-from helpers import initiate_logger, verify_if_user_exists, decode_token, verify_token_payload, enviar_activacion
+from helpers import initiate_logger, verify_if_user_exists, decode_token, verify_token_payload, send_activation
 from common import TokenEnum, token_schema, AnyCode
 from config import get_db
 from models import AuthUserModel
 from schemas import LogInUserSchema
-
-PUBLISH_QUEUE = os.getenv('PUBLISH_QUEUE')
-PUBLISH_EXCHANGE = os.getenv('PUBLISH_EXCHANGE')
 
 activate_router = APIRouter(prefix="/activate", tags=["Activate Account"])
 logger = initiate_logger("activate")
@@ -37,4 +34,4 @@ async def activate(token: HTTPAuthorizationCredentials = Depends(token_schema), 
 @activate_router.post("/send")
 async def activate(user: LogInUserSchema, db: Database = Depends(get_db)):
     '''reenvia el correo de activacion'''
-    return enviar_activacion(user, db, logger)
+    return send_activation(user, db, logger)

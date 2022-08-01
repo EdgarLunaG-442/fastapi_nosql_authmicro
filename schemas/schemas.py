@@ -33,3 +33,14 @@ class LogInUserSchema(BaseModel):
         allow_population_by_field_name = True
         arbitrary_types_allowed = True
         use_enum_values = True
+
+
+class ChangePasswordSchema(BaseModel):
+    old_password: str = Field(...)
+    new_password: str = Field(...)
+
+
+class RecoverPasswordSchema(BaseModel):
+    email: str = Field(...)
+    code: Optional[int]
+    new_password: Optional[str]

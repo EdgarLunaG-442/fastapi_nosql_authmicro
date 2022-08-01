@@ -12,7 +12,7 @@ sesion_router = APIRouter(prefix="/sesion", tags=["Sesion"])
 logger = initiate_logger("sesion")
 
 
-@sesion_router.post("/refresh")
+@sesion_router.post("/")
 async def sesion(token: str = Depends(oauth2_scheme), db: Database = Depends(get_db)):
     '''Verifica la validez del token de sesion contra la Base de Datos'''
     collection: Collection = db.get_collection('AccesoUsuario')
@@ -26,7 +26,7 @@ async def sesion(token: str = Depends(oauth2_scheme), db: Database = Depends(get
     return {"access_token": token, "token_type": "bearer"}
 
 
-@sesion_router.post("/verify")
+@sesion_router.get("/")
 async def sesion(token: str = Depends(oauth2_scheme), db: Database = Depends(get_db)):
     '''Verifica la validez del token de sesion contra la Base de Datos'''
     collection: Collection = db.get_collection('AccesoUsuario')
