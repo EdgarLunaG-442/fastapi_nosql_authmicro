@@ -7,3 +7,4 @@ from .password_router import password_router
 from .role_router import role_router
 from .delete_account_router import delete_account_router
 from .enable_account_router import enable_account_router
+from .consult_account_router import consult_account_router

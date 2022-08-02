@@ -20,7 +20,7 @@ class AuthUserModel(BaseModel):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        if not isinstance(kwargs.get('role'), RoleEnum):
+        if not isinstance(kwargs.get('role'), RoleEnum) and kwargs.get('role'):
             self.role = RoleEnum(kwargs.get('role'))
 
     def encrypt_pass(self):

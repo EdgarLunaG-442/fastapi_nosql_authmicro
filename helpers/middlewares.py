@@ -41,6 +41,7 @@ def verify_if_user_verified(auth_user_model: AuthUserModel):
     if not auth_user_model.verified:
         raise NotAllowed('La cuenta no esta verificada')
 
+
 def verify_if_user_active(auth_user_model: AuthUserModel):
     if not auth_user_model.active:
         raise NotAllowed('Esta cuenta no está activa. Porfavor comuniquese con soporte al cliente')
@@ -55,7 +56,7 @@ def verify_token_payload(token_payload: dict, token_type: TokenEnum, db_payload:
     if token_payload.get('token_type', '') != token_type.value:
         raise NotAllowed('El Token no es valido. Porfavor ingrese un nuevo token')
 
-    filtered_payload = delete_from_dict(token_payload, ['token_type'])
+    filtered_payload = delete_from_dict(token_payload, ['token_type', 'name'])
     filtered_db_payload = delete_from_dict(db_payload, ['password', 'active'])
     if db_payload and filtered_payload != filtered_db_payload:
         raise NotAllowed('El Token no es valido. Porfavor ingrese un nuevo token')
