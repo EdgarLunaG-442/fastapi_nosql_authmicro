@@ -14,8 +14,14 @@ class AuthUserModel(BaseModel):
     password: str = Field(...)
     role: RoleEnum = Field(default=RoleEnum.USER)
     verified: bool = Field(default=False)
+    active: bool = Field(default=True)
     created_at: datetime.datetime = Field(default=datetime.datetime.now(tz=datetime.timezone.utc))
     modified_at: datetime.datetime = Field(default=datetime.datetime.now(tz=datetime.timezone.utc))
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if not isinstance(kwargs.get('role'), RoleEnum):
+            self.role = RoleEnum(kwargs.get('role'))
 
     def encrypt_pass(self):
         bytes_pass = self.password.encode('utf-8')

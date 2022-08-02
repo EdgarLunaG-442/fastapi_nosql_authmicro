@@ -21,9 +21,8 @@ async def sign_in(user: SignInUserSchema, db: Database = Depends(get_db)):
     verify_if_user_exists(user_auth_collection, user.email, 'sign_in')
     # Estructura el diccionario a guardar la informacion en sus respectivas colecciones
     user_dict = user.dict()
-    user_dict_without_pass = delete_from_dict(user_dict, ['password'])
     user_contact_service.ping()
-    code, response_data = user_contact_service.crear_contacto_usuario(generate_token(user_dict_without_pass))
+    code, response_data = user_contact_service.crear_contacto_usuario(generate_token(user_dict))
     user_dict.update({"user_id": response_data.get('user_id')})
     # Crea el modelo a guardar en la coleccion de autenticacion y guarda su info en la BD
     auth_user_model = AuthUserModel(**user_dict)

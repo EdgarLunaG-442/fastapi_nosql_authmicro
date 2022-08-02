@@ -4,7 +4,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from pymongo.database import Database
 from pymongo.collection import Collection
 from helpers import initiate_logger, verify_if_user_exists, generate_token, verify_password, delete_from_dict, \
-    verify_if_user_verified
+    verify_if_user_verified, verify_if_user_active
 from config import get_db
 from models import AuthUserModel
 from schemas import LogInUserSchema
@@ -21,7 +21,8 @@ async def log_in(user: OAuth2PasswordRequestForm = Depends(), db: Database = Dep
     user_dict = verify_if_user_exists(collection, user.email, 'log_in')
     auth_user_model = AuthUserModel(**user_dict)
     verify_password(auth_user_model, user.password)
+    verify_if_user_active(auth_user_model)
     verify_if_user_verified(auth_user_model)
     out_user_model = jsonable_encoder(auth_user_model)
-    token = generate_token(delete_from_dict(out_user_model, ['password']))
+    token = generate_token(out_user_model)
     return {"access_token": token, "token_type": "bearer"}

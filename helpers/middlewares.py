@@ -41,6 +41,10 @@ def verify_if_user_verified(auth_user_model: AuthUserModel):
     if not auth_user_model.verified:
         raise NotAllowed('La cuenta no esta verificada')
 
+def verify_if_user_active(auth_user_model: AuthUserModel):
+    if not auth_user_model.active:
+        raise NotAllowed('Esta cuenta no está activa. Porfavor comuniquese con soporte al cliente')
+
 
 def verify_password(user: AuthUserModel, password: str):
     if not user.verify_pass(password):
@@ -52,13 +56,18 @@ def verify_token_payload(token_payload: dict, token_type: TokenEnum, db_payload:
         raise NotAllowed('El Token no es valido. Porfavor ingrese un nuevo token')
 
     filtered_payload = delete_from_dict(token_payload, ['token_type'])
-    filtered_db_payload = delete_from_dict(db_payload, ['password'])
+    filtered_db_payload = delete_from_dict(db_payload, ['password', 'active'])
     if db_payload and filtered_payload != filtered_db_payload:
         raise NotAllowed('El Token no es valido. Porfavor ingrese un nuevo token')
 
 
 def verify_correct_user(token_payload: dict, user_id: str):
-    if token_payload.get('user_id') != user_id and token_payload.get('role') != RoleEnum.ADMIN.value:
+    if token_payload.get('user_id') != user_id:
+        raise NotAllowed("No tiene los permisos para realizar ésta acción")
+
+
+def verify_admin_user(token_payload: dict):
+    if token_payload.get('role') != RoleEnum.ADMIN.value:
         raise NotAllowed("No tiene los permisos para realizar ésta acción")
 
 
@@ -74,7 +83,7 @@ def send_activation(user: LogInUserSchema, db: Database, logger, sign_in_step: b
     verify_password(auth_user_model, user.password)
     extended_auth_user_dict = jsonable_encoder(auth_user_model)
     extended_auth_user_dict["name"] = contact_user_dict["name"]
-    out_user_dict = delete_from_dict(extended_auth_user_dict, ['password'])
+    out_user_dict = delete_from_dict(extended_auth_user_dict, ['password', 'active'])
     b64_out_user = base64.b64encode(json.dumps(out_user_dict).encode('utf-8'))
     for i in list(range(10)):
         try:

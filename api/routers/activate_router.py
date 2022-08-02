@@ -32,6 +32,6 @@ async def activate(token: HTTPAuthorizationCredentials = Depends(token_schema), 
 
 
 @activate_router.post("/send")
-async def activate(user: LogInUserSchema, db: Database = Depends(get_db)):
+async def send_activate(user: LogInUserSchema, db: Database = Depends(get_db)):
     '''reenvia el correo de activacion'''
     return send_activation(user, db, logger)
