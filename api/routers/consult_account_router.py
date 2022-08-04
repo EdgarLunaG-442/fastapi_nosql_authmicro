@@ -1,4 +1,3 @@
-import difflib
 import re
 from bson import ObjectId
 from fastapi.encoders import jsonable_encoder
@@ -26,10 +25,6 @@ def t_t_c_s(txt: str):
     """
     new_text = re.sub(r'[\s]*', '', txt).lower()
     return new_text
-
-
-def similar(a, b):
-    return difflib.SequenceMatcher(None, a, b).ratio()
 
 
 @consult_account_router.post("/")
