@@ -55,7 +55,7 @@ async def consultar_usuarios(max_entries: int = Body(5), search: str = Body(None
         if best_matches:
             best_matches_dict = list(auth_collection.find({'email': {'$in': best_matches}}).limit(max_entries))
             best_matches_model = [AuthUserModel(**match) for match in best_matches_dict]
-            return [delete_from_dict(jsonable_encoder(user), ['password']) for user in best_matches_model]
+            return [delete_from_dict(jsonable_encoder(user), ['password', '_id']) for user in best_matches_model]
         else:
             return []
 
@@ -74,4 +74,4 @@ async def consultar_usuario(user_id: str, token=Depends(oauth2_scheme), db: Data
     if not target_user_dict_raw:
         raise ObjectNotFound('El usuario objetivo no existe.')
     target_user_model = AuthUserModel(**target_user_dict_raw)
-    return delete_from_dict(jsonable_encoder(target_user_model), ['password'])
+    return delete_from_dict(jsonable_encoder(target_user_model), ['password', '_id'])
